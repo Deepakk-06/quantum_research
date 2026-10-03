@@ -1,249 +1,215 @@
-# Quantum-Enhanced Traffic-Aware Path Planning for Autonomous Delivery Robots
+OWNER="Deepakk-06"
+REPO="quantum_research"
+cd ~/Desktop && rm -rf qr-edit
+if ! git clone -q https://github.com/$OWNER/$REPO.git qr-edit; then
+  echo "STOP: could not clone https://github.com/$OWNER/$REPO, check the owner and repo name"
+else
+cd qr-edit
+cat > README.md <<'EOF'
+<div align="center">
 
-> A conceptual research study exploring the possible application of **Quantum Approximate Optimization Algorithm (QAOA)** and **Quadratic Unconstrained Binary Optimization (QUBO)** to traffic-aware path planning for autonomous delivery robots.
+# ⚛️ QUANTUM × ROBOTICS 🤖
+
+### Quantum-Enhanced Traffic-Aware Path Planning for Autonomous Delivery Robots
+
+**What if a delivery robot could pick its route with quantum optimization?**
+A conceptual research study on **QAOA** + **QUBO** + **ROS 2**.
+
+![Status](https://img.shields.io/badge/STATUS-CONCEPTUAL_RESEARCH-C6FF00?style=for-the-badge&labelColor=0a0a0c)
+![Concept Date](https://img.shields.io/badge/CONCEPT-04_OCT_2025-FF40A0?style=for-the-badge&labelColor=0a0a0c)
+![Implemented](https://img.shields.io/badge/IMPLEMENTED-NOT_YET-555?style=for-the-badge&labelColor=0a0a0c)
+
+![QAOA](https://img.shields.io/badge/QAOA-0a0a0c?style=flat-square)
+![QUBO](https://img.shields.io/badge/QUBO-0a0a0c?style=flat-square)
+![ROS 2](https://img.shields.io/badge/ROS_2-0a0a0c?style=flat-square&logo=ros&logoColor=white)
+![Path Planning](https://img.shields.io/badge/Path_Planning-0a0a0c?style=flat-square)
+![Autonomous Systems](https://img.shields.io/badge/Autonomous_Systems-0a0a0c?style=flat-square)
+
+</div>
 
 ---
 
-## About
-
-This project was developed as a **conceptual research study** to explore how ideas from quantum computing could potentially be applied to robotics and autonomous navigation.
-
-The work focuses on the possibility of combining **ROS 2**, **QUBO-based optimization**, and **QAOA** to address path-planning problems where multiple factors such as traffic, battery level, delivery priority, and multiple robots need to be considered.
-
-The concept was developed on **October 4, 2025** as an initial research idea. The purpose of this work was to study the problem, develop a possible mathematical formulation, and propose an architecture that could be explored further through implementation and experimentation.
-
-**This work is conceptual and has not been implemented or experimentally validated.**
+> ⚠️ **Honest note:** this is a **conceptual study**. It has **not** been
+> implemented, simulated or experimentally validated, and it makes **no claim**
+> that QAOA beats classical path planning.
 
 ---
 
-## Problem Statement
+## 🧠 The idea in 10 seconds
 
-Autonomous delivery robots may need to select suitable routes while dealing with changing traffic conditions, limited battery capacity, delivery priorities, and the presence of other robots.
+Delivery robots have to pick routes while juggling **traffic, battery,
+priority, deadlines, load and other robots**. As routes and constraints pile
+up, the problem gets harder.
 
-As the number of possible routes and constraints increases, the path-planning problem can become more complex.
+This project asks one question:
 
-This project explores whether such a problem could potentially be represented as a **QUBO optimization problem** and investigated using **QAOA**.
+> **Can this be written as a QUBO problem and explored with QAOA?**
 
----
+## 🎯 Problem statement
 
-## Proposed Approach
+Autonomous delivery robots may need to select suitable routes while dealing
+with changing traffic conditions, limited battery capacity, delivery
+priorities, and the presence of other robots. As the number of possible routes
+and constraints increases, the path-planning problem can become more complex.
 
-The basic idea is:
+This project explores whether such a problem could potentially be represented
+as a **QUBO optimization problem** and investigated using **QAOA**.
 
-```text
-Traffic Information
-        │
-        ▼
-Robot Information
-(Battery / Load / Priority)
-        │
-        ▼
-Path Planning Problem
-        │
-        ▼
-QUBO Formulation
-        │
-        ▼
-QAOA
-(Proposed Approach)
-        │
-        ▼
-Route Selection
-        │
-        ▼
-ROS 2 Navigation
-        │
-        ▼
-Delivery Robot
+## 🧩 Proposed approach
+
+```mermaid
+flowchart TD
+    A["🚦 Traffic information"] --> C
+    B["🔋 Robot information<br/>battery · load · priority"] --> C
+    C["🗺️ Path planning problem"] --> D
+    D["🧮 QUBO formulation"] --> E
+    E["⚛️ QAOA<br/>(proposed approach)"] --> F
+    F["📍 Route selection"] --> G
+    G["🤖 ROS 2 navigation"] --> H
+    H["📦 Delivery robot"]
 ```
 
-The above represents the **proposed concept**, not an implemented system.
+*This is the **proposed concept**, not an implemented system.*
 
----
+## 🧮 QUBO formulation
 
-## QUBO Formulation
+The path-selection problem is conceptually written as:
 
-The path-selection problem is conceptually represented using a QUBO objective of the form:
+$$
+C(x) = \sum_{i,j} w_{ij}\, x_i x_j + \sum_i h_i\, x_i
+$$
 
-```text
-C(x) = Σ wij xi xj + Σ hi xi
+| Symbol | Meaning |
+| --- | --- |
+| $x_i$ | Binary route-selection variables |
+| $w_{ij}$ | Costs or interactions between route segments |
+| $h_i$ | Individual costs and constraint-related terms |
+
+**Factors the formulation considers**
+
+- 🚦 Traffic conditions
+- 🔋 Battery level
+- 🎯 Delivery priority
+- ⏱️ Delivery deadlines
+- 📦 Robot load
+- 🛣️ Route availability
+- 🤝 Multi-robot coordination
+
+The formulation is part of the **conceptual study** and requires further
+implementation and testing.
+
+## 🏗️ Proposed system architecture
+
+```mermaid
+flowchart TD
+    T["📡 Traffic Data Node"] --> R
+    R["🔋 Robot Status Node"] --> Q
+    Q["🧮 QUBO Formulation<br/>proposed model"] --> A
+    A["⚛️ QAOA Optimization<br/>proposed method"] --> N
+    N["🧭 ROS 2 Navigation Layer"] --> D
+    D["🤖 Autonomous Delivery Robot"]
 ```
 
-where:
+## 🔬 Research objectives
 
-* `xi` represents binary route-selection variables.
-* `wij` represents costs or interactions between route segments.
-* `hi` represents individual costs and constraint-related terms.
+1. 🧩 Understand whether robot path planning can be formulated as a **QUBO** problem
+2. ⚛️ Explore **QAOA** as a possible optimization method
+3. 🔗 Propose a basic architecture connecting quantum optimization concepts with **ROS 2**
+4. 🚦 Consider traffic and robot-specific constraints in route selection
+5. 🔭 Identify directions for future implementation and experimentation
 
-The proposed formulation considers factors such as:
+## 📊 Current status
 
-* Traffic conditions
-* Battery level
-* Delivery priority
-* Delivery deadlines
-* Robot load
-* Route availability
-* Multi-robot coordination
+| Area | Status |
+| --- | --- |
+| Concept development | ✅ Completed |
+| Problem study | ✅ Completed |
+| Proposed architecture | ✅ Completed |
+| QUBO formulation | 🟡 Conceptual |
+| QAOA implementation | ⬜ Not implemented |
+| ROS 2 integration | ⬜ Not implemented |
+| Simulation | ⬜ Not performed |
+| Hardware testing | ⬜ Not performed |
+| Experimental validation | ⬜ Not performed |
 
-The formulation presented in this project is part of the **conceptual study** and requires further implementation and testing.
+## 🚧 Limitations
 
----
+The approach has not been tested in simulation or on a physical robot. Areas
+that need further investigation:
 
-## Proposed System Architecture
+- Practical implementation of the QUBO formulation
+- Scalability for larger path-planning problems
+- QAOA performance on the proposed problem
+- Comparison with classical path-planning methods
+- Real-time traffic data integration
+- Computational requirements
+- Integration with an actual ROS 2 navigation system
 
-```text
-┌─────────────────────┐
-│    Traffic Data     │
-│        Node         │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│    Robot Status     │
-│        Node         │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  QUBO Formulation   │
-│   Proposed Model    │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  QAOA Optimization  │
-│   Proposed Method   │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│      ROS 2          │
-│ Navigation Layer    │
-└──────────┬──────────┘
-           │
-           ▼
-┌─────────────────────┐
-│ Autonomous Delivery │
-│       Robot         │
-└─────────────────────┘
-```
+Therefore, **no conclusion is made** about whether QAOA would provide an
+advantage over existing classical approaches.
 
----
+## 🗺️ Roadmap (future work)
 
-## Research Objectives
+- [x] Concept development
+- [x] Problem study
+- [x] Proposed architecture
+- [ ] Implement the proposed QUBO model
+- [ ] Test the model with classical optimization methods
+- [ ] Experiment with QAOA simulators
+- [ ] Study the effect of increasing problem size
+- [ ] Integrate the optimization approach with ROS 2
+- [ ] Build a multi-robot simulation environment
+- [ ] Compare results with classical path-planning methods
+- [ ] Eventually test on a physical robot
 
-The main objectives of the study were:
+## 🕰️ Timeline
 
-1. To understand the possibility of formulating autonomous robot path planning as a QUBO problem.
-2. To explore the use of QAOA as a possible optimization method.
-3. To propose a basic architecture connecting quantum optimization concepts with ROS 2.
-4. To consider traffic and robot-specific constraints in route selection.
-5. To identify possible directions for future implementation and experimentation.
+| Date | Event |
+| --- | --- |
+| **04 Oct 2025** | Concept and research work carried out |
+| Later | Repository published to document and preserve the work |
 
----
-
-## Current Status
-
-| Area                    | Status          |
-| ----------------------- | --------------- |
-| Concept Development     | Completed       |
-| Problem Study           | Completed       |
-| Proposed Architecture   | Completed       |
-| QUBO Formulation        | Conceptual      |
-| QAOA Implementation     | Not implemented |
-| ROS 2 Integration       | Not implemented |
-| Simulation              | Not performed   |
-| Hardware Testing        | Not performed   |
-| Experimental Validation | Not performed   |
-
----
-
-## Limitations
-
-Since this project is currently conceptual, the proposed approach has not yet been tested in a simulation or on a physical robot.
-
-Some of the main areas requiring further investigation are:
-
-* Practical implementation of the QUBO formulation
-* Scalability for larger path-planning problems
-* QAOA performance on the proposed problem
-* Comparison with classical path-planning methods
-* Real-time traffic data integration
-* Computational requirements
-* Integration with an actual ROS 2 navigation system
-
-Therefore, no conclusion is made in this work regarding whether QAOA would provide an advantage over existing classical approaches.
-
----
-
-## Future Work
-
-The concept could be developed further through:
-
-* Implementing the proposed QUBO model
-* Testing the model using classical optimization methods
-* Experimenting with QAOA simulators
-* Studying the effect of increasing problem size
-* Integrating the optimization approach with ROS 2
-* Creating a multi-robot simulation environment
-* Comparing the results with classical path-planning methods
-* Eventually testing the concept on a physical robot
-
----
-
-## Project Timeline
-
-**Concept / Research Development:** October 4, 2025
-
-The initial concept and research work documented in this repository were carried out on **October 4, 2025**.
-
-The repository is being published later to document and preserve the work.
-
----
-
-## Repository Contents
+## 📁 Repository contents
 
 ```text
-Quantum-Enhanced-Traffic-Aware-Path-Planning/
-│
+quantum_research/
 ├── PROJECT-2_GitHub.pdf
 └── README.md
 ```
 
-### PROJECT-2_GitHub.pdf
+📄 **[PROJECT-2_GitHub.pdf](./PROJECT-2_GitHub.pdf)** is the original conceptual
+research document: methodology, mathematical formulation, system architecture,
+limitations and future scope.
 
-The PDF contains the original conceptual research document, including the proposed methodology, mathematical formulation, system architecture, limitations, and future scope.
+## 👥 Team
 
----
+| | |
+| --- | --- |
+| **Deepak K** | Dept. of Electrical and Electronics Engineering, New Horizon College of Engineering, Bangalore, India |
+| **A M Likhitha** | Dept. of Electrical and Electronics Engineering, New Horizon College of Engineering, Bangalore, India |
 
-## Team
+Developed as a collaborative conceptual research study by the two team members.
 
-### Deepak K
+## 🏷️ Research areas
 
-Department of Electrical and Electronics Engineering
-New Horizon College of Engineering
-Bangalore, India
-
-### A M Likhitha
-
-Department of Electrical and Electronics Engineering
-New Horizon College of Engineering
-Bangalore, India
-
-This work was developed as a collaborative conceptual research study by the two team members.
+`Quantum Computing` · `Robotics` · `ROS 2` · `QAOA` · `QUBO` · `Path Planning` · `Autonomous Systems`
 
 ---
 
-## Research Areas
+<div align="center">
 
-**Quantum Computing · Robotics · ROS 2 · QAOA · QUBO · Path Planning · Autonomous Systems**
+**Status:** Conceptual Research, Proposed Approach
+**Concept date:** 04 October 2025
+**Implementation / experimental validation:** not yet performed
 
----
+*Big idea. Honest status. Next step: build it.* ⚛️🤖
 
-### Project Status
-
-**Conceptual Research — Proposed Approach**
-
-**Concept Date:** 04 October 2025
-
-**Implementation / Experimental Validation:** Not yet performed
+</div>
+EOF
+echo "--- files in repo ---"; ls
+git add README.md
+if git diff --cached --quiet; then echo "NOTHING TO CHANGE"
+else git commit -qm "Rewrite README with diagrams and status tracker" && git push -q origin main && echo "DONE: README pushed"
+fi
+cd ~/Desktop && rm -rf qr-edit
+fi
